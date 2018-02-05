@@ -1,0 +1,23 @@
+{
+  "name": "jstalk-mvc",
+  "version": "1.0.0",
+  "description": "",
+  "main": "mvc.html",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "run-server": "static-server",
+    "build-common-js": "browserify commonJS/index.js > commonJS/indexBundle.js",
+    "create-umd": "cd umd && mkdir custom && cd custom && yo umd"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "static-server": "^3.0.0"
+  },
+  "devDependencies": {
+    "browserify": "^15.2.0",
+    "generator-umd": "^0.1.0",
+    "webpack": "^3.10.0",
+    "yo": "^2.0.0"
+  }
+}

@@ -1,0 +1,117 @@
+body {
+    font-family: Arial;
+    padding-top: 40px;
+}
+
+.add-comment-form {
+    width: 25vw;
+    font-family: Arial,sans-serif;
+}
+
+.label-input {
+    display: block;
+    margin-bottom: 15px;
+}
+
+.input,
+.textarea {
+    display: inline-block;
+    box-sizing: border-box;
+    width: 100%;
+    height: 30px;
+    padding: 0 11px;
+    margin: 0;
+    border-radius: 0;
+    border: 1px solid #cbd1d4;
+    font-size: 14px;
+    color: #333;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    -webkit-tap-highlight-color: transparent;
+    background-color: #fff;
+}
+
+.textarea {
+    height: 70px;
+}
+
+.button {
+    display: inline-block;
+    width: 100%;
+    box-sizing: border-box;
+    margin: 0;
+    border-radius: 0;
+    text-decoration: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    white-space: nowrap;
+    -webkit-appearance: none;
+    cursor: pointer;
+    height: 30px;
+    position: relative;
+    padding: 0 15px;
+    border: 1px solid;
+    font-size: 14px;
+    font-family: inherit;
+    line-height: 28px;
+    -webkit-transition: background-color .2s ease-in-out,color .2s ease-in-out,box-shadow .2s ease-in-out;
+    transition: background-color .2s ease-in-out,color .2s ease-in-out,box-shadow .2s ease-in-out;
+    color: #333;
+    border-color: #cbd1d4;
+    background-color: transparent;
+}
+
+.comments-wrapper {
+    display: flex;
+    justify-content: space-around;
+    margin-bottom: 25px;
+}
+
+.comments {
+    margin-bottom: 40px;
+    width: 400px;
+    background: #ccc;
+    color: #333;
+}
+
+.comment-item {
+    display: flex;
+    width: 100%;
+    padding: 10px;
+    border-bottom: 1px solid #eee;
+    justify-content: space-between;
+    box-sizing: border-box;
+}
+
+    .comment-item:last-child {
+        border-bottom: 0;
+    }
+
+    .comment-item__edit {
+        display: inline-flex;
+        padding: 0 10px;
+        align-items: center;
+        color: #4183c4;
+        cursor: pointer;
+    }
+
+.comments-additional {
+    width: 400px;
+    background: #723;
+    color: #fff;
+}
+
+    .comments-additional .comment-item__title {
+        font-size: 24px;
+    }
+
+    .comments-additional .comment-item__text{
+        font-style: italic;
+    }
+
+.comment-item__title {
+    font-weight: bold;
+    margin-bottom: 5px;
+}

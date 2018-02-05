@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="styles.css"/>
+</head>
+<body>
+<div id="root">
+    <div class="comments-wrapper">
+        <div>
+            <div id="JS-CommentsNode" class="comments"></div>
+            <div id="JS-CommentsNode-Additional" class="comments-additional"></div>
+        </div>
+        <form class="add-comment-form" action="">
+            <label class="label-input">
+                <input class="input" type="text" name="date" id="JS-CommentTitle" placeholder="Заголовок"/>
+            </label>
+            <label class="label-input">
+                <textarea class="textarea" type="text" name="text" id="JS-CommentText" placeholder="Комментарий"></textarea>
+            </label>
+            <button class="button" type="submit" id="JS-CommentSubmit">Сохранить</button>
+        </form>
+    </div>
+</div>
+<script data-main="umd/index.js" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.5/require.js"></script>
+</body>
+</html>

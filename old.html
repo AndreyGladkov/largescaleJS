@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="styles.css"/>
+</head>
+<body>
+<div id="root">
+    <div class="comments-wrapper">
+        <div id="JS-CommentsNode" class="comments"></div>
+        <form class="add-comment-form" action="">
+            <label class="label-input">
+                <input class="input" type="text" name="date" id="JS-CommentTitle" placeholder="Заголовок"/>
+            </label>
+            <label class="label-input">
+                <textarea class="textarea" type="text" name="text" id="JS-CommentText" placeholder="Комментарий"></textarea>
+            </label>
+            <button class="button" type="submit" id="JS-CommentSubmit">Сохранить</button>
+        </form>
+    </div>
+    <div id="JS-CommentsNode-Additional" class="comments-additional"></div>
+</div>
+<script>
+    const commentsNode = document.getElementById('JS-CommentsNode-Additional');
+
+    function renderComment(commentData) {
+        const {title, text, id} = commentData;
+        const template = `
+            <div class="comment-item JS-Comment-Item-Additional" data-id="${id}">
+                <div class="comment-item__content">
+                    <div class="comment-item__title">Заголовок: ${title}</div>
+                    <div class="comment-item__text">Текст комментария: ${text}</div>
+                </div>
+            </div>
+        `.trim();
+
+        const commentNode = new DOMParser().parseFromString(template, 'text/html').body.childNodes;
+        commentNode.forEach((node) => {commentsNode.appendChild(node);})
+    }
+
+    function remove(commentData) {
+        const commentsList = commentsNode.querySelectorAll('.JS-Comment-Item-Additional');
+        for (let i = 0; i < commentsList.length; i++) {
+            if (+commentsList[i].getAttribute('data-id') === commentData.id) {
+                commentsList[i].remove();
+            }
+        }
+    }
+
+    class Events {
+        constructor() {
+            const listeners = [];
+            this.on = this.on.bind(this, listeners);
+            this.trigger = this.trigger.bind(this, listeners);
+        }
+
+        on(listeners, name, cb) {
+            if (!listeners[name]) {
+                listeners[name] = [];
+            }
+
+            listeners[name].push(cb);
+        }
+
+        trigger(listeners, name, data) {
+            if (listeners[name]) {
+                listeners[name].forEach(
+                    cb => cb(data)
+                );
+            }
+        }
+    }
+
+    var CommentViewAdditional = {
+        render: renderComment,
+        remove
+    }
+
+    class CommentView extends Events {
+        constructor(commentsNode) {
+            super();
+            this.commentsNode = commentsNode;
+            commentsNode.addEventListener('click', (event) => {
+                if (event.target.classList.contains('JS-Comment-ItemEdit')) {
+                    const commentNode = event.target.closest('.JS-Comment-Item');
+
+                    if (commentNode) {
+                        const id = commentNode.getAttribute('data-id');
+                        this.trigger('remove', id);
+                    }
+                }
+            });
+        }
+
+        render(commentData) {
+            const {title, text, id} = commentData;
+            const template = `
+            <div class="comment-item JS-Comment-Item" data-id="${id}">
+                <div class="comment-item__content">
+                    <div class="comment-item__title">${title}</div>
+                    <div class="comment-item__text">${text}</div>
+                </div>
+                <div class="comment-item__edit JS-Comment-ItemEdit">❌</div>
+            </div>
+        `.trim();
+
+            const commentNode = new DOMParser().parseFromString(template, 'text/html').body.childNodes;
+            commentNode.forEach((node) => {this.commentsNode.appendChild(node);})
+        }
+
+        remove(commentData) {
+            const commentsList = this.commentsNode.querySelectorAll('.JS-Comment-Item');
+            for (let i = 0; i < commentsList.length; i++) {
+                if (+commentsList[i].getAttribute('data-id') === commentData.id) {
+                    commentsList[i].remove();
+                }
+            }
+        }
+    }
+
+    class CommentModel {
+        constructor(model) {
+            const commentStore = {};
+
+            this.get = this.get.bind(this, commentStore);
+            this.set = this.set.bind(this, commentStore);
+
+            this.set(model);
+        }
+
+        get(commentStore) {
+            return Object.assign({}, commentStore);
+        }
+
+        set(commentStore, model) {
+            const {id = commentStore.id, title = commentStore.title, text = commentStore.text } = model;
+            commentStore.id = id;
+            commentStore.title = title;
+            commentStore.text = text;
+        }
+    }
+
+    const titleInput = document.querySelector('#JS-CommentTitle');
+    const textInput = document.querySelector('#JS-CommentText');
+    const addCommentButton = document.querySelector('#JS-CommentSubmit');
+    const AddCommentsView = new Events();
+
+    addCommentButton.addEventListener('click', (event) => {
+        'use strict'
+        event.preventDefault();
+        AddCommentsView.trigger('add', {title: titleInput.value, text: textInput.value})
+
+        titleInput.value = '';
+        textInput.value = '';
+    });
+
+    const commentStore = [];
+    let id = 0;
+
+    const commentView = new CommentView(document.getElementById('JS-CommentsNode'));
+
+    const publicInterface = {
+        add(item) {
+            const {title, text} = item;
+            const comment = new CommentModel({
+                id: id,
+                title,
+                text,
+            });
+
+            id += 1;
+
+            commentStore.push(comment);
+
+            CommentViewAdditional.render(comment.get())
+            commentView.render(comment.get());
+        },
+        getAll() {
+            return commentStore.map(comment => (comment.get()));
+        },
+        remove(id) {
+            const comment = commentStore[id];
+            commentStore.slice(id, 1);
+
+            CommentViewAdditional.remove(comment.get());
+            commentView.remove(comment.get());
+        }
+    };
+
+    commentView.on('remove', function(id) {
+        publicInterface.remove(id);
+    });
+
+    AddCommentsView.on('add', function(comment) {
+        publicInterface.add(comment);
+    })
+
+</script>
+</body>
+</html>

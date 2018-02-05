@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="styles.css"/>
+</head>
+<body>
+<div id="root">
+    <div class="comments-wrapper">
+        <div>
+            <div id="JS-CommentsNode" class="comments"></div>
+            <div id="JS-CommentsNode-Additional" class="comments-additional"></div>
+        </div>
+        <form class="add-comment-form" action="">
+            <label class="label-input">
+                <input class="input" type="text" name="date" id="JS-CommentTitle" placeholder="Заголовок"/>
+            </label>
+            <label class="label-input">
+                <textarea class="textarea" type="text" name="text" id="JS-CommentText" placeholder="Комментарий"></textarea>
+            </label>
+            <button class="button" type="submit" id="JS-CommentSubmit">Сохранить</button>
+        </form>
+    </div>
+</div>
+<script src="global/CommentViewAdditional.js"></script>
+<script src="global/Events.js"></script>
+<script src="global/CommentView.js"></script>
+<script src="global/CommentModel.js"></script>
+<script src="global/AddCommentsView.js"></script>
+<script src="global/CommentsStore.js"></script>
+</body>
+</html>

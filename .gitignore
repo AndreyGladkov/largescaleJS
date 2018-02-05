@@ -1,0 +1,7 @@
+*.esproj
+.idea
+.vscode
+.DS_Store
+node_modules
+*.iml
+npm-debug.log
